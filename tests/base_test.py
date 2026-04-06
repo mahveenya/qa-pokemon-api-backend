@@ -1,4 +1,3 @@
-from api.pokemons_list import PokemonsListEndpoint
 import pytest
 
 
@@ -7,4 +6,3 @@ class BaseTest:
     def setup(self, client, db):
         self.db = db
         self.client = client
-        self.pokemons_list = PokemonsListEndpoint(client)

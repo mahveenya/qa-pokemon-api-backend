@@ -1,13 +1,14 @@
-from api_client import ApiClient
+from api.api_client import Client, CoreClient
 from db.db_client import DB, DBClient
 import pytest
 
 
 @pytest.fixture(scope="session")
 def client():
-    client = ApiClient()
+    core_client = CoreClient()
+    client = Client(core_client)
     yield client
-    client.close()
+    core_client.close()
 
 
 @pytest.fixture(scope="session")
