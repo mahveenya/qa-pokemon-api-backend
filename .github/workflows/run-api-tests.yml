@@ -28,6 +28,10 @@ jobs:
       - name: Start QA environment
         run: docker compose -f docker-compose.yml up -d --wait
 
+      - name: Show container logs
+        if: failure()
+        run: docker compose -f docker-compose.yml logs
+
       - name: Run pytest
         run: uv run pytest -v
 
