@@ -1,7 +1,7 @@
 from constants import Endpoints
 
 
-class PokemonsListEndpoint:
+class PokemonListEndpoint:
     def __init__(self, client):
         self.client = client
         self.path = Endpoints.POKEMON

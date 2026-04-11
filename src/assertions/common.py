@@ -4,12 +4,31 @@ from hamcrest import assert_that, equal_to
 
 
 @step
-def verify_entity_name(entity, expected_entity_name):
+def verify_id(entity, expected_id):
+    assert_that(entity["id"], equal_to(expected_id))
+
+
+@step
+def verify_name(entity, expected_entity_name):
     assert_that(entity["name"], equal_to(expected_entity_name))
 
 
 @step
-def _verify_entity_url(entity, expected_entity_id, expected_entity_url_placeholder):
+def verify_quantity(list_of_entities, expected_list_of_entities):
+    assert_that(len(list_of_entities), equal_to(len(expected_list_of_entities)))
+
+
+@step
+def verify_ordering_by_id(list_of_entities, expected_ordered_list_of_entities_by_id):
+    for index, expected_entity in enumerate(expected_ordered_list_of_entities_by_id):
+        actual_pokemon_name = list_of_entities[index]["name"]
+        assert_that(actual_pokemon_name, equal_to(expected_entity.name))
+
+
+@step
+def verify_named_resource_url(
+    entity, expected_entity_id, expected_entity_url_placeholder
+):
     actual_entity_url = entity["url"]
     expected_entity_url = expected_entity_url_placeholder.format(
         id_or_name=expected_entity_id
@@ -18,9 +37,11 @@ def _verify_entity_url(entity, expected_entity_id, expected_entity_url_placehold
 
 
 @step
-def _verify_named_resource(entity, expected_entity, expected_entity_url_placeholder):
-    verify_entity_name(entity, expected_entity.name)
-    _verify_entity_url(entity, expected_entity.id, expected_entity_url_placeholder)
+def verify_named_resource(entity, expected_entity, expected_entity_url_placeholder):
+    verify_name(entity, expected_entity.name)
+    verify_named_resource_url(
+        entity, expected_entity.id, expected_entity_url_placeholder
+    )
 
 
 @step
@@ -35,6 +56,6 @@ def verify_named_resources(
 
     for expected_entity in expected_list_of_entities:
         actual_entity = dict_of_entities_w_ids[expected_entity.id]
-        _verify_named_resource(
+        verify_named_resource(
             actual_entity, expected_entity, expected_entity_url_placeholder
         )

@@ -2,7 +2,7 @@ from http import HTTPStatus
 import os
 
 from api.pokemon import PokemonEndpoint
-from api.pokemons_list import PokemonsListEndpoint
+from api.pokemon_list import PokemonListEndpoint
 from hamcrest import assert_that, equal_to
 import requests
 
@@ -29,5 +29,5 @@ class CoreClient:
 
 class Client:
     def __init__(self, client: CoreClient):
-        self.pokemons_list = PokemonsListEndpoint(client)
+        self.pokemon_list = PokemonListEndpoint(client)
         self.pokemon = PokemonEndpoint(client)
