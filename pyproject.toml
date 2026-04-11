@@ -17,6 +17,7 @@ dev = [
     "pyhamcrest>=2.1.0",
     "requests>=2.33.1",
     "psycopg[binary]>=3.3.3",
+    "allure-pytest>=2.15.3",
 ]
 
 [tool.ruff]
