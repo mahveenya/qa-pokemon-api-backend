@@ -1,22 +1,27 @@
 from assertions.common import verify_named_resources
+from assertions.utils.allure import step
 from constants import Endpoints
 from db.models.pokemon import PokemonModel
 from hamcrest import assert_that, equal_to
 
 
+@step
 def _verify_count(res, expected_count):
     assert_that(res["count"], equal_to(expected_count))
 
 
+@step
 def _verify_results_count(res, expected_results_quantity):
     assert_that(len(res["results"]), equal_to(expected_results_quantity))
 
 
+@step
 def _verify_pagination_links(res, expected_next_link=None, expected_previous_link=None):
     assert_that(res["next"], equal_to(expected_next_link))
     assert_that(res["previous"], equal_to(expected_previous_link))
 
 
+@step
 def _verify_pokemons_are_ordered_by_id(
     results, expected_pokemons_ordered_by_id: list[PokemonModel]
 ):
@@ -25,6 +30,7 @@ def _verify_pokemons_are_ordered_by_id(
         assert_that(actual_pokemon_name, equal_to(expected_pokemon.name))
 
 
+@step
 def _verify_results(response, expected_pokemons_ordered_by_id: list[PokemonModel]):
     results = response["results"]
     _verify_pokemons_are_ordered_by_id(results, expected_pokemons_ordered_by_id)
@@ -33,6 +39,7 @@ def _verify_results(response, expected_pokemons_ordered_by_id: list[PokemonModel
     )
 
 
+@step
 def verify_pokemons_list_response(
     response,
     expected_pokemons_ordered_by_id: list[PokemonModel],
